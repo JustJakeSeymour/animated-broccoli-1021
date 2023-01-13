@@ -9,6 +9,6 @@
 <ul>
   <% @doctor.doctor_patients.each do |doctor_patient| %>
     <li id="doctor_patient_id_<%= doctor_patient.id %>"><%= doctor_patient.patient.name %>
-    <%= button_to "Remove", doctor_patient, method: :delete %></li>
+    <%= button_to "Remove", doctor_patient_path(doctor_patient), method: :delete %></li>
   <% end %>
 </ul>

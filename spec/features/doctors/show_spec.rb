@@ -35,10 +35,10 @@ RSpec.describe "Doctor Show Page" do
       visit doctor_path(doctor1.id)
       
       expect(page).to have_content(patient1.name)
-
+      
       within "#doctor_patient_id_#{doctor_patient1.id}" do
         expect(page).to have_button("Remove")
-
+        
         click_button "Remove"
         expect(current_path).to eq(doctor_path(doctor1.id))
       end
@@ -49,6 +49,17 @@ RSpec.describe "Doctor Show Page" do
     it "does not remove patient from another doctor page" do
       create(:doctor_patient, doctor_id: doctor2.id, patient_id: patient1.id)
       
+      visit doctor_path(doctor1.id)
+      
+      expect(page).to have_content(patient1.name)
+      
+      within "#doctor_patient_id_#{doctor_patient1.id}" do
+        click_button "Remove"
+      end
+      expect(page).to_not have_content(patient1.name)
+      
+      visit doctor_path(doctor2.id)
+      expect(page).to have_content(patient1.name)
     end
   end
 end
